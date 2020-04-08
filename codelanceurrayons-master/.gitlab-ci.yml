@@ -1,0 +1,107 @@
+variables:
+  GIT_SUBMODULE_STRATEGY: recursive
+
+before_script: 
+   - "git submodule add --force https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.univ-artois.fr/lanceurrayons/testslanceurrayons.git tests"
+   - "git submodule update --remote --init"
+
+stages:
+  - build
+  - initial
+  - basic
+  - realist
+  - matrices
+  - efficiency
+  - qa
+  - mystery
+
+comparateur:
+   stage: initial
+   script: "cd tests; ./tests1.sh"
+   tags: 
+     - shell
+
+vectests:
+   stage: initial
+   script: "cd tests; ./tests2.sh"
+   tags: 
+     - shell
+
+lecturescenes:
+   stage: initial
+   script: "cd tests; ./tests3.sh"
+   tags:
+     - shell
+
+premieresimages:
+   stage: basic
+   script: "cd tests; ./tests4.sh"
+   tags:
+     - shell
+
+imagescouleur:
+   stage: basic
+   script: "cd tests; ./tests5.sh"
+   tags:
+     - shell
+
+lumiereindirecte:
+   stage: realist
+   script: "cd tests; ./tests7.sh"
+   tags:
+     - shell
+
+damiers:
+   stage: realist
+   script: "cd tests; ./tests10.sh"
+   tags:
+     - shell
+
+anticrenelage:
+   stage: realist
+   script: "cd tests; ./tests12.sh"
+   tags:
+     - shell
+
+plansettriangles:
+   stage: basic
+   script: "cd tests; ./tests6.sh"
+   tags:
+     - shell
+
+transformations1:
+   stage: matrices
+   script: "cd tests; ./tests8.sh"
+   tags:
+     - shell
+
+transformations2:
+   stage: matrices
+   script: "cd tests; ./tests9.sh"
+   tags:
+     - shell
+
+transformations3:
+   stage: matrices
+   script: "cd tests; ./tests11.sh"
+   tags:
+     - shell
+
+auditcode:
+   stage: qa
+   script: "sonar-scanner -Dsonar.login=$SONARTOKEN -Dsonar.projectKey=tracer$CI_PROJECT_ID -Dsonar.projectName=Raytracer_by_$CI_PROJECT_NAMESPACE"
+   tags:
+     - shell
+     - sonar
+   
+executable:
+   stage: build
+   script: "./build.sh"
+   artifacts:
+      paths: 
+      - raytracer.jar
+      - bin
+      - "*.sh"
+   tags:
+     - shell
+
