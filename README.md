@@ -8,7 +8,9 @@ Cette méthode consiste à parcourir le sens inverse la lumière.
 2) Fini
 
 Vous pouvez lancer ./raytrace.sh demo1.scene.
+
 "demo1.scene" represente le fichier scene qui sera lu.
+
 Plusieurs fichier scene sont fournit pour vous servir d'exemple.
 
 # Guide utilisateurs
